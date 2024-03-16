@@ -4,7 +4,7 @@ const gridSize = 20;
 const tileCount = canvas.width / gridSize;
 
 const foodImg = new Image();
-foodImg.src = "./images/python.jpg"; // replace with your image path
+foodImg.src = "../../images/python.jpg"; // replace with your image path
 
 let snake = [{ x: 10, y: 10 }];
 let score = 0;
