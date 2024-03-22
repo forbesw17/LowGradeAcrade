@@ -15,25 +15,32 @@ header {
     text-align: center;
 }
 
-main {
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #7e58d2; /* Dark purple navigation */
+    color: #fff; /* White text color */
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    color: #fff; /* White text color */
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* main {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     margin-top: 20px;
-}
-
-.game {
-    margin: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.high-score {
-    margin-top: 10px;
-}
+} */
 
 footer {
     background-color: #7e58d2; /* Dark purple footer */

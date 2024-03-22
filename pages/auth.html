@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SignIn/SignUp</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            margin-top: 10px;
+        }
+        input {
+            margin-bottom: 10px;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>SignIn/SignUp</h1>
+    <form action="auth.php" method="post">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <button type="submit">Sign In</button>
+      <button type="submit" formaction="register.php">Sign Up</button>
+    </form>
+  </body>
+</html>
