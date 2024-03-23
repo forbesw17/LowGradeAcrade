@@ -7,6 +7,9 @@ Welcome to Low Grade Arcade! This is a project by Group 7, comprising Clay Garri
 ### Snake Game
 Navigate the snake through the grid and collect as many apples as you can without eating the snake itself. Test your reflexes and strategic thinking with this timeless arcade game!
 
+### Space Invaders
+Defend Earth against descending alien invaders in this classic arcade shooter. Command your spaceship, blast enemies, and dodge incoming fire. Can you save humanity from annihilation?
+
 ## Developer Installation Steps
 
 To set up the development environment and access the game files, follow these steps:
