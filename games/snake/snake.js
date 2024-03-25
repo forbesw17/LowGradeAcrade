@@ -92,7 +92,7 @@ function gameLoop() {
   drawFood();
   moveSnake();
 
-  setTimeout(gameLoop, 50);
+  setTimeout(gameLoop, 40);
 }
 
 document.addEventListener("keydown", (event) => {
