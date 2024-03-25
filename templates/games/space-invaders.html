@@ -20,7 +20,14 @@
     </style>
   </head>
   <body>
+    <nav class="navbar">
+      <h1>Low Grade Arcade</h1>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/games">Games</a>
+      <a href="/auth">Sign In</a>
+    </nav>
     <canvas id="gameCanvas" width="480" height="320"></canvas>
-    <script src="space-invaders.js"></script>
+    <script src="{{ url_for('static', filename='game_scripts/space-invaders.js') }}"></script>
   </body>
 </html>
