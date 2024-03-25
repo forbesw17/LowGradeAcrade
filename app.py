@@ -26,6 +26,11 @@ def about():
 def games():
        return render_template("games.html")
 
+@app.route('/games/<game_name>')
+def game(game_name):
+    # your code here...
+    return render_template(f'games/{game_name}.html')
+
 @app.route('/auth')
 def auth():
        return render_template("auth.html")

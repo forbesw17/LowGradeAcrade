@@ -3,8 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Games</title>
+    <title>Snake Game</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <style>
+      canvas {
+        border: 1px solid black;
+        background-color: #f0f0f0;
+        display: block;
+        margin: 10px auto 0 auto;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar">
@@ -14,22 +22,11 @@
       <a href="/games">Games</a>
       <a href="/auth">Sign In</a>
     </nav>
-    <header class="header">
-      <h1>Games</h1>
-    </header>
 
-    <main>
-      <ul class="gameList">
-        <li>
-          <a href="/games/space-invaders">Space Invaders</a>
-        </li>
-        <li><a href="/games/pong">Pong</a></li>
-        <li><a href="/games/snake">Snake</a></li>
-      </ul>
-    </main>
+    <canvas id="gameCanvas" width="500" height="500"></canvas>
 
-    <footer>
-      <p>&copy; 2024 Low Grade Arcade</p>
-    </footer>
+    <div id="score" style="text-align: center">Score: 0</div>
+    
+    <script src="{{ url_for('static', filename='game_scripts/snake.js') }}"></script>
   </body>
 </html>
