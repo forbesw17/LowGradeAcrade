@@ -5,7 +5,6 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f0e8ff;
-  /* color: #333; */
   min-height: 100vh;
 }
 
@@ -70,13 +69,14 @@ Ex) index.html, about.html
   color: black;
   text-align: center;
   font-size: 24px;
-  margin-block-start: 80px;
+  margin-block-start: 60px;
 }
 
 main {
   text-align: center;
   margin-inline: 10vw;
   line-height: 2;
+  margin-block-end: 60px;
 }
 
 /* 
@@ -143,8 +143,13 @@ Ex) snake.html, tetris.html
 */
 
 .gameCanvas {
-    display: block;
-    border: 1px solid black;
-    background-color: #f0f0f0;
-    margin: auto;
-  }
+  display: block;
+  border: 1px solid black;
+  background-color: #f0f0f0;
+  margin: auto;
+}
+
+.score {
+  font-size: 24px;
+  margin: 10px;
+}

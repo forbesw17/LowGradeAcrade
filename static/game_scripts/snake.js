@@ -120,24 +120,28 @@ function gameLoop() {
 document.addEventListener("keydown", (event) => {
   switch (event.key) {
     case "w":
+    case "ArrowUp":
       if (dy === 0) {
         dx = 0;
         dy = -1;
       }
       break;
     case "s":
+    case "ArrowDown":
       if (dy === 0) {
         dx = 0;
         dy = 1;
       }
       break;
     case "a":
+    case "ArrowLeft":
       if (dx === 0) {
         dx = -1;
         dy = 0;
       }
       break;
     case "d":
+    case "ArrowRight":
       if (dx === 0) {
         dx = 1;
         dy = 0;
@@ -145,5 +149,11 @@ document.addEventListener("keydown", (event) => {
       break;
   }
 });
+
+window.addEventListener('keydown', function(e) {
+  if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+      e.preventDefault();
+  }
+}, false);
 
 gameLoop();

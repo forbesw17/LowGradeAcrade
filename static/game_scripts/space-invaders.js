@@ -2,8 +2,8 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 // Define game constants
-const PLAYER_WIDTH = 20;
-const PLAYER_HEIGHT = 20;
+const PLAYER_WIDTH = 40;
+const PLAYER_HEIGHT = 40;
 const PLAYER_SPEED = 5;
 const ENEMY_WIDTH = 20;
 const ENEMY_HEIGHT = 20;
@@ -19,6 +19,17 @@ const player = {
   width: PLAYER_WIDTH,
   height: PLAYER_HEIGHT,
 };
+
+// Enemy object
+const enemy = {
+  x: 0,
+  y: 0,
+  width: ENEMY_WIDTH,
+  height: ENEMY_HEIGHT,
+};
+
+// Bullet object
+const bullets = [];
 
 // Keyboard event listeners
 document.addEventListener("keydown", keyDownHandler, false);
@@ -46,30 +57,38 @@ function keyUpHandler(e) {
   }
 }
 
-function shootBullet() {
-  if (!bullet.visible) {
-    bullet.x = player.x + player.width / 2 - BULLET_WIDTH / 2;
-    bullet.y = player.y;
-    bullet.visible = true;
+// Prevent arrow keys & spacebar from scrolling the page
+window.addEventListener('keydown', function(e) {
+  if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.key)) {
+      e.preventDefault();
   }
+}, false);
+
+const FIRE_RATE = 500; // Fire rate in milliseconds
+let lastFireTime = 0; // Timestamp of the last bullet fired
+
+function shootBullet() {
+  // Check if enough time has passed since the last bullet was fired
+  const currentTime = Date.now();
+  if (currentTime - lastFireTime < FIRE_RATE) {
+    return; // Don't shoot if fire rate limit is not reached
+  }
+
+  // Update last fire time
+  lastFireTime = currentTime;
+
+  // Create a new bullet
+  var newBullet = {
+    x: player.x + player.width / 2 - BULLET_WIDTH / 2,
+    y: player.y,
+    width: BULLET_WIDTH,
+    height: BULLET_HEIGHT,
+    visible: true
+  };
+
+  // Add the new bullet to the bullets array
+  bullets.push(newBullet);
 }
-
-// Enemy object
-const enemy = {
-  x: 0,
-  y: 0,
-  width: ENEMY_WIDTH,
-  height: ENEMY_HEIGHT,
-};
-
-// Bullet object
-const bullet = {
-  x: 0,
-  y: 0,
-  width: BULLET_WIDTH,
-  height: BULLET_HEIGHT,
-  visible: false,
-};
 
 // Update game state
 function update() {
@@ -87,49 +106,51 @@ function update() {
     enemy.y += 30;
   }
 
-  // Fire bullet
-  if (bullet.visible) {
-    bullet.y -= BULLET_SPEED;
-    if (bullet.y < 0) {
-      bullet.visible = false;
+  // Move bullets
+  for (let i = 0; i < bullets.length; i++) {
+    bullets[i].y -= BULLET_SPEED;
+    // If the bullet is off the screen, remove it from the array
+    if (bullets[i].y < 0) {
+      bullets.splice(i, 1);
+      i--;
     }
   }
 
   // Collision detection
-  if (
-    bullet.visible &&
-    bullet.x < enemy.x + enemy.width &&
-    bullet.x + bullet.width > enemy.x &&
-    bullet.y < enemy.y + enemy.height &&
-    bullet.y + bullet.height > enemy.y
-  ) {
-    bullet.visible = false;
-    enemy.x = 0;
-    enemy.y = 0;
+  for (let i = 0; i < bullets.length; i++) {
+    if (
+      bullets[i].x < enemy.x + enemy.width &&
+      bullets[i].x + bullets[i].width > enemy.x &&
+      bullets[i].y < enemy.y + enemy.height &&
+      bullets[i].y + bullets[i].height > enemy.y
+    ) {
+      bullets.splice(i, 1);
+      enemy.x = 0;
+      enemy.y = 0;
+      break; // Exit loop after first collision
+    }
   }
 }
 
 // Draw objects on canvas
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
-  ctx.rect(player.x, player.y, player.width, player.height);
-  ctx.fillStyle = "#0095DD";
-  ctx.fill();
-  ctx.closePath();
+  
+  // Draw player image
+  var playerImg = new Image();
+  playerImg.src = "/static/images/space-invaders-assets/player.png";
+  ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
 
-  ctx.beginPath();
-  ctx.rect(enemy.x, enemy.y, enemy.width, enemy.height);
-  ctx.fillStyle = "#FF0000";
-  ctx.fill();
-  ctx.closePath();
+  // Draw enemy image
+  var enemyImg = new Image();
+  enemyImg.src = "/static/images/space-invaders-assets/enemy1.png";
+  ctx.drawImage(enemyImg, enemy.x, enemy.y, enemy.width, enemy.height);
 
-  if (bullet.visible) {
-    ctx.beginPath();
-    ctx.rect(bullet.x, bullet.y, bullet.width, bullet.height);
-    ctx.fillStyle = "#000";
-    ctx.fill();
-    ctx.closePath();
+  // Draw bullet image
+  var bulletImg = new Image();
+  bulletImg.src = "/static/images/space-invaders-assets/bullet.png";
+  for (let i = 0; i < bullets.length; i++) {
+    ctx.drawImage(bulletImg, bullets[i].x, bullets[i].y, bullets[i].width, bullets[i].height);
   }
 }
 
