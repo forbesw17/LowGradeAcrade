@@ -1,33 +1,30 @@
+{% extends "./games/game_base.html" %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Space Invaders</title>
-    <link rel="stylesheet"href="{{ url_for('static', filename='css/style.css') }}" />
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-
-      canvas {
-        display: block;
-        margin: 0 auto;
-        background-color: #f0f0f0;
-      }
-    </style>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    
   </head>
   <body>
-    <nav class="navbar">
-      <h1>Low Grade Arcade</h1>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/games">Games</a>
-      <a href="/auth">Sign In</a>
-    </nav>
-    <canvas id="gameCanvas" width="480" height="320"></canvas>
+    {% block game_content %}
+    <canvas id="gameCanvas" class="gameCanvas" width="500" height="500"></canvas>
+    <div id="score" style="text-align: center">Score: 0</div>
+    {% endblock %} {% block how_to_play %}
+    <p>
+      Use the arrow keys to move and the space bar to shoot. Don't let the
+      aliens reach the bottom!
+    </p>
+    {% endblock %} {% block high_scores %}
+    <p>1. Alice: 100 points</p>
+    <p>2. Bob: 80 points</p>
+    <p>3. Charlie: 60 points</p>
     <script src="{{ url_for('static', filename='game_scripts/space-invaders.js') }}"></script>
+    {% endblock %}
   </body>
 </html>

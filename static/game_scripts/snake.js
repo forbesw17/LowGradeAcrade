@@ -1,4 +1,5 @@
 const canvas = document.getElementById("gameCanvas");
+console.log(canvas.style)
 const ctx = canvas.getContext("2d");
 const gridSize = 20;
 const tileCount = canvas.width / gridSize;
@@ -12,12 +13,33 @@ let dx = 0;
 let dy = 0;
 let food = generateFood();
 
+// function generateFood() {
+//   return {
+//     x: Math.floor(Math.random() * tileCount),
+//     y: Math.floor(Math.random() * tileCount),
+//   };
+// }
+
+
 function generateFood() {
-  return {
-    x: Math.floor(Math.random() * tileCount),
-    y: Math.floor(Math.random() * tileCount),
-  };
+  let newFoodPosition;
+  while (newFoodPosition == null || onSnake(newFoodPosition)) {
+      newFoodPosition = randomGridPosition();
+  }
+  return newFoodPosition;
 }
+
+function randomGridPosition() {
+  return {
+      x: Math.floor(Math.random() * tileCount),
+      y: Math.floor(Math.random() * tileCount)
+  }
+}
+
+function onSnake(position) {
+  return snake.some(segment => segment.x === position.x && segment.y === position.y);
+}
+
 
 function drawSnake() {
   ctx.fillStyle = "green";
@@ -98,28 +120,24 @@ function gameLoop() {
 document.addEventListener("keydown", (event) => {
   switch (event.key) {
     case "w":
-    case "ArrowUp":
       if (dy === 0) {
         dx = 0;
         dy = -1;
       }
       break;
     case "s":
-    case "ArrowDown":
       if (dy === 0) {
         dx = 0;
         dy = 1;
       }
       break;
     case "a":
-    case "ArrowLeft":
       if (dx === 0) {
         dx = -1;
         dy = 0;
       }
       break;
     case "d":
-    case "ArrowRight":
       if (dx === 0) {
         dx = 1;
         dy = 0;

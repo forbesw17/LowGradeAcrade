@@ -1,58 +1,150 @@
-
-
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0e8ff; /* Light purple background */
-    color: #333; /* Dark text color */
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0e8ff;
+  /* color: #333; */
+  min-height: 100vh;
 }
 
-.header {
-    color: black;
-    text-align: center;
-    font-size: 24px;
-    margin-block-start: 80px;
-}
+/* 
+**************************************************
+**************************************************
+base.html -- Styles
+**************************************************
+**************************************************
+*/
 
 .navbar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #7e58d2; /* Dark purple navigation */
-    color: #fff; /* White text color */
-    padding: 20px;
-    text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #7e58d2;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
 }
 
 .navbar > h1 {
-    font-size: 18px;
-    margin: 0;
+  font-size: 18px;
+  margin: 0;
 }
 
 .navbar > a {
-    color: #fff; /* White text color */
-    text-decoration: none;
-    font-size: 12px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
 }
 
 .navbar > a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
-main {
-    text-align: center;
-    /* padding: 20px; */
-    height: 100vh;
-    margin-inline: 10vw;
-    line-height: 1.5;
+.content {
+  /* display: flex;;
+  align-items: center;
+  justify-content: space-around; */
+  flex-grow: 1;
 }
 
 footer {
-    background-color: #7e58d2; 
-    background-repeat: no-repeat;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
+  flex-shrink: 0;
+  background-color: #7e58d2;
+  background-repeat: no-repeat;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
 }
+
+/* 
+**************************************************
+Page -- Styles
+Ex) index.html, about.html
+**************************************************
+*/
+
+.header {
+  color: black;
+  text-align: center;
+  font-size: 24px;
+  margin-block-start: 80px;
+}
+
+main {
+  text-align: center;
+  margin-inline: 10vw;
+  line-height: 2;
+}
+
+/* 
+**************************************************
+Games.html -- Styles
+List of games
+**************************************************
+*/
+
+.gameList {
+  padding-inline: 10vw;
+  list-style-type: none;
+  line-height: 2;
+}
+
+.gameList > li {
+  margin: 10px;
+  border: 1px solid #7e58d2;
+  border-radius: 5px;
+}
+
+.gameList > li > a {
+  display: block;
+  margin: 0;
+  padding-block: 10px;
+  color: #7e58d2;
+  text-decoration: none;
+}
+
+.gameList > li:hover {
+  background-color: #7e58d2;
+  color: #fff;
+}
+.gameList > li > a:hover {
+  background-color: #7e58d2;
+  color: #fff;
+}
+
+/* 
+**************************************************
+games_base.html -- Styles
+**************************************************
+*/
+
+.game-container {
+  display: flex;
+  align-items: center;
+  height: 90vh;
+  justify-content: space-evenly;
+}
+
+.game-info {
+  display: flex;
+  height: 500px;
+  flex-direction: column;
+  font-size: calc(8px + 0.65vw);
+}
+
+/*
+**************************************************
+Individual Game Styles
+Ex) snake.html, tetris.html
+**************************************************
+*/
+
+.gameCanvas {
+    display: block;
+    border: 1px solid black;
+    background-color: #f0f0f0;
+    margin: auto;
+  }

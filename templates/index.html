@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,16 +8,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
   </head>
   <body>
-    <nav class="navbar">
-      <h1>Low Grade Arcade</h1>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/games">Games</a>
-      <a href="/auth">Sign In</a>
-    </nav>
+    {% block content %}
     <header class="header">
       <h1>Welcome!</h1>
     </header>
+
     <main>
       <p style="margin: 0">
         Welcome to Low Grade Arcade! This is a website that has three classic
@@ -26,8 +22,9 @@
         games and features in the future.
       </p>
     </main>
-    <footer>
+    <!-- <footer>
       <p>&copy; 2024 Low Grade Arcade</p>
-    </footer>
+    </footer> -->
+    {% endblock %}
   </body>
 </html>

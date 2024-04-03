@@ -1,33 +1,65 @@
+{% extends "base.html" %} 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
   </head>
   <body>
-    <nav class="navbar">
-      <h1>Low Grade Arcade</h1>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/games">Games</a>
-      <a href="/auth">Sign In</a>
-    </nav>
+    {% block content %}
     <header class="header">
       <h1>About</h1>
     </header>
     <main>
       <p>
-        This is a retro arcade website. It has three games: Snake, Pong, and
-        Space Invaders. Each game is a classic and has been recreated using
-        HTML, CSS, and JavaScript. The website also has a sign-in/sign-up page.
-        The website is a work in progress and will be updated with more games
-        and features in the future.
+        Welcome to our retro arcade website! Here, we bring back the nostalgia
+        of classic arcade games from the past. Our collection currently features
+        three beloved titles: Snake, Pong, and Space Invaders. Each game has
+        been meticulously recreated using HTML, CSS, and JavaScript to capture
+        the essence of the originals while providing a modern and accessible
+        gaming experience.
+      </p>
+      <p>
+        In addition to the games, we offer a sign-in/sign-up page for users to
+        create accounts and save their progress or compete with others on our
+        leaderboard. Our website is continuously evolving, and we have plans to
+        introduce more games and features in the future, so be sure to check
+        back regularly for updates!
+      </p>
+      <h2>Future Plans:</h2>
+      <p>
+        We're excited to expand our game library and enhance our website with
+        new features. Some of the upcoming updates include:
+      </p>
+      <ul>
+        <li>
+          Adding more classic arcade games to our collection, such as Pac-Man,
+          Tetris, and Donkey Kong.
+        </li>
+        <li>
+          Implementing multiplayer functionality to allow users to challenge
+          their friends or compete against other players online.
+        </li>
+        <li>
+          Introducing customizable avatars and profiles for users to personalize
+          their gaming experience.
+        </li>
+        <li>
+          Enhancing the user interface and overall user experience based on
+          feedback and suggestions from our community.
+        </li>
+      </ul>
+      <p>
+        Thank you for visiting our retro arcade website! We hope you enjoy
+        playing our games and look forward to bringing you even more excitement
+        and entertainment in the future.
       </p>
     </main>
-    <footer>
-      <p>&copy; 2024 Low Grade Arcade</p>
-    </footer>
+    {% endblock %}
   </body>
 </html>

@@ -4,16 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Games</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
   </head>
   <body>
-    <nav class="navbar">
-      <h1>Low Grade Arcade</h1>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/games">Games</a>
-      <a href="/auth">Sign In</a>
-    </nav>
+    {% extends "base.html" %} {% block content %}
     <header class="header">
       <h1>Games</h1>
     </header>
@@ -27,9 +24,6 @@
         <li><a href="/games/snake">Snake</a></li>
       </ul>
     </main>
-
-    <footer>
-      <p>&copy; 2024 Low Grade Arcade</p>
-    </footer>
+    {% endblock %}
   </body>
 </html>

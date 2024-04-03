@@ -26,13 +26,8 @@
     </style>
   </head>
   <body>
-    <nav class="navbar">
-      <h1>Low Grade Arcade</h1>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/games">Games</a>
-      <a href="/auth">Sign In</a>
-    </nav>
+    {% extends "base.html" %}
+    {% block content %}
     <header class="header">
       <h1>SignIn/SignUp</h1>
     </header>
@@ -45,9 +40,9 @@
         <button type="submit">Sign In</button>
         <button type="submit" formaction="register.php">Sign Up</button>
       </form>
-    </main>
-    <footer>
-      <p>&copy; 2024 Low Grade Arcade</p>
-    </footer>
+
+</main>
+    {% endblock %}
   </body>
 </html>
+

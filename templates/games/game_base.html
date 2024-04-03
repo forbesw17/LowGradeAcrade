@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    {% extends "base.html" %} {% block content %}
+    <div class="game-container">
+      <div class="game_content">
+        {% block game_content %}
+        <!-- Game canvas will go here -->
+        {% endblock %}
+      </div>
+
+      <div class="game-info">
+        <div class="how-to-play">
+          <h2>How to Play</h2>
+          {% block how_to_play %}
+          <!-- Game-specific instructions will go here -->
+          {% endblock %}
+        </div>
+
+        <div class="high-scores">
+          <h2>Current High Scores</h2>
+          {% block high_scores %}
+          <!-- Game-specific high scores will go here -->
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  </body>
+</html>
