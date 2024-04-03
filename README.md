@@ -10,6 +10,9 @@ Navigate the snake through the grid and collect as many apples as you can withou
 ### Space Invaders
 Defend Earth against descending alien invaders in this classic arcade shooter. Command your spaceship, blast enemies, and dodge incoming fire. Can you save humanity from annihilation?
 
+### Pong
+Experience the classic arcade showdown of Pong. Control your paddle, bounce the ball, and outsmart your opponent in this addictive game of skill and reflexes.
+
 ## Developer Installation Steps
 
 To set up the development environment and access the game files, first ensure that you have **Python** installed, then follow these steps:
