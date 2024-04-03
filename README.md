@@ -12,7 +12,7 @@ Defend Earth against descending alien invaders in this classic arcade shooter. C
 
 ## Developer Installation Steps
 
-To set up the development environment and access the game files, follow these steps:
+To set up the development environment and access the game files, first ensure that you have **Python** installed, then follow these steps:
 
 1. **Clone the Repository**: Open your terminal or command prompt and navigate to the directory where you want to store the game files. Then, use the following command to clone the repository:
 
@@ -22,9 +22,9 @@ To set up the development environment and access the game files, follow these st
 
 2. **Navigate to the Project Directory**: Once the repository is cloned, navigate into the project directory using the `cd` command:
 
-3. **Explore the Game Files**: You can now explore the game files within the cloned repository. Make any necessary modifications or enhancements to the codebase as needed.
+3. **Install the Neccesary Dependencies**: Run `pip install -r requirements.txt`
 
-4. **Launch the Game**: To play the game locally, follow the instructions provided in the respective game's directory. Typically, you'll need to open an HTML file or run a script depending on the game's implementation.
+4. **Launch the Site**: Run `python app.py` to start a Flask development server. Then just follow the link.
 
 <!-- 
 5. **Contribute**: If you wish to contribute to the project, feel free to make changes to the codebase. Once you've made your modifications, push your changes to the repository using Git.
