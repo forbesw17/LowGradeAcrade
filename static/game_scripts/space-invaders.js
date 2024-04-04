@@ -59,7 +59,7 @@ function keyUpHandler(e) {
 
 // Prevent arrow keys & spacebar from scrolling the page
 window.addEventListener('keydown', function(e) {
-  if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.key)) {
+  if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', " "].includes(e.key)) {
       e.preventDefault();
   }
 }, false);

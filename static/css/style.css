@@ -81,6 +81,46 @@ main {
 
 /* 
 **************************************************
+Auth.html -- Styles
+Sign in and Sign up forms
+**************************************************
+*/
+
+form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input {
+  width: 300px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e58d2;
+}
+
+button {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e58d2;
+  background-color: #7e58d2;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  font-weight: bold;
+  box-shadow: 0 0 5px #7e58d2;
+}
+
+form > a {
+  color: #7e58d2;
+  text-decoration: none;
+}
+
+/* 
+**************************************************
 Games.html -- Styles
 List of games
 **************************************************
@@ -122,17 +162,32 @@ games_base.html -- Styles
 */
 
 .game-container {
-  display: flex;
-  align-items: center;
-  height: 90vh;
-  justify-content: space-evenly;
+  display: grid;
+  margin-inline: 5vw;
+  margin-block: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  align-items: flex-start;
+}
+
+.game-content {
+  display: block; /* Not needed, but added as placeholder */
 }
 
 .game-info {
   display: flex;
-  height: 500px;
   flex-direction: column;
   font-size: calc(8px + 0.65vw);
+}
+
+/* Ensure the first item does not grow in height */
+.game-info:first-child {
+  align-self: flex-start; /* Align the first item to the start */
+  grid-row: 1 / span 1; /* Ensure the first item stays in the first row */
+}
+
+/* Allow subsequent items to grow in height */
+.game-info:not(:first-child) {
+  align-self: stretch; /* Allow items to stretch vertically */
 }
 
 /*

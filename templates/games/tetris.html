@@ -1,0 +1,99 @@
+{% extends "./games/game_base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pong</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    {% block game_content %}
+    <canvas
+      id="gameCanvas"
+      class="gameCanvas"
+      width="500"
+      height="500"
+      style="background-color: black"
+    ></canvas>
+    <div id="score" style="text-align: center">Score: 0</div>
+    {% endblock %} {% block how_to_play %}
+    <!-- <p>
+      Use the arrow keys to move the pieces left and right. Q and W rotate the pieces. 
+    </p> -->
+    <div id="instructions">
+      <h3>Objective:</h3>
+      <p>
+        The objective of Tetris is to maneuver falling blocks called Tetriminos
+        to create horizontal lines without any gaps. When a line is completed,
+        it clears from the playing field, allowing more space for further
+        Tetriminos. The game ends when the Tetriminos reach the top of the
+        playing field.
+      </p>
+
+      <h3>Controls:</h3>
+      <ul>
+        <li>Left Arrow (←): Move Tetrimino left.</li>
+        <li>Right Arrow (→): Move Tetrimino right.</li>
+        <li>
+          Down Arrow (↓): Accelerate the falling speed of Tetrimino (soft drop).
+        </li>
+        <li>Q Key: Rotate Tetrimino counterclockwise.</li>
+        <li>W Key: Rotate Tetrimino clockwise.</li>
+      </ul>
+
+      <h3>Gameplay:</h3>
+      <ul>
+        <li>
+          Falling Tetriminos: Tetriminos fall from the top of the screen. You
+          can control their movement and rotation using the arrow keys and Q/W
+          keys.
+        </li>
+        <li>
+          Clearing Lines: When a horizontal line is completely filled with
+          blocks, it clears from the screen, and you earn points based on the
+          number of lines cleared simultaneously.
+        </li>
+        <li>
+          Scoring: Points are awarded for each line cleared. The more lines you
+          clear at once, the higher your score multiplier.
+        </li>
+        <li>
+          Game Over: If the Tetriminos stack up to the top of the screen, the
+          game ends, and your score is finalized.
+        </li>
+      </ul>
+
+      <h3>Tips:</h3>
+      <ul>
+        <li>
+          Plan Ahead: Anticipate the best placement for each Tetrimino to create
+          complete lines and avoid creating gaps.
+        </li>
+        <li>
+          Use Rotation: Rotate Tetriminos to fit into tight spaces and clear
+          lines more efficiently.
+        </li>
+        <li>
+          Down Arrow for Faster Drops: Use the down arrow to speed up the
+          falling Tetriminos for quicker placements.
+        </li>
+        <li>
+          Stay Calm: Tetris gets faster as you progress, so stay calm under
+          pressure and focus on clearing lines strategically.
+        </li>
+      </ul>
+
+      <p>Have Fun and Happy Tetrimino Stacking!</p>
+    </div>
+    {% endblock %} {% block high_scores %}
+    <p>1. Alice: 100 points</p>
+    <p>2. Bob: 80 points</p>
+    <p>3. Charlie: 60 points</p>
+    <script src="{{ url_for('static', filename='game_scripts/tetris.js') }}"></script>
+    {% endblock %}
+  </body>
+</html>
