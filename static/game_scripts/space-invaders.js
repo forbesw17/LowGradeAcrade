@@ -1,7 +1,31 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Define game constants
+function sendScoreToServer(score) {
+  fetch('/submit_score', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ score: score }),
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Score submitted successfully:', data.message);
+    // Optionally, you can handle the response from the server here
+  })
+  .catch(error => {
+    console.error('Error submitting score:', error);
+    // Optionally, you can handle errors here
+  });
+}
+ 
+// Game constants
 const PLAYER_WIDTH = 40;
 const PLAYER_HEIGHT = 40;
 const PLAYER_SPEED = 5;
@@ -10,47 +34,51 @@ const ENEMY_HEIGHT = 20;
 const ENEMY_SPEED = 1;
 const BULLET_WIDTH = 5;
 const BULLET_HEIGHT = 10;
-const BULLET_SPEED = 5;
-
+const BULLET_SPEED = 10;
+ 
 let score = 0;
-
-// Player object
+let enemyCount = 1;
+let gameOver = false;  // Game over state
+ 
 const player = {
   x: canvas.width / 2 - PLAYER_WIDTH / 2,
   y: canvas.height - PLAYER_HEIGHT - 10,
   width: PLAYER_WIDTH,
   height: PLAYER_HEIGHT,
 };
-
-// Enemy object
-const enemy = {
-  x: 0,
-  y: 0,
-  width: ENEMY_WIDTH,
-  height: ENEMY_HEIGHT,
-};
-
-// Bullet object
+ 
+const enemies = [];
 const bullets = [];
-
-// Keyboard event listeners
+const enemyBullets = [];
+ 
+function initEnemies() {
+  for (let i = 0; i < enemyCount; i++) {
+    enemies.push({
+      x: i * ENEMY_WIDTH * 2,
+      y: 0,
+      width: ENEMY_WIDTH,
+      height: ENEMY_HEIGHT,
+    });
+  }
+}
+initEnemies();
+ 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
-
+ 
 let rightPressed = false;
 let leftPressed = false;
-
+ 
 function keyDownHandler(e) {
   if (e.key === "Right" || e.key === "ArrowRight") {
     rightPressed = true;
   } else if (e.key === "Left" || e.key === "ArrowLeft") {
     leftPressed = true;
   } else if (e.key === " " || e.key === "Spacebar") {
-    // Add spacebar key detection
-    shootBullet();
+    shootBullet(player.x + player.width / 2 - BULLET_WIDTH / 2, player.y, -BULLET_SPEED);
   }
 }
-
+ 
 function keyUpHandler(e) {
   if (e.key === "Right" || e.key === "ArrowRight") {
     rightPressed = false;
@@ -58,112 +86,170 @@ function keyUpHandler(e) {
     leftPressed = false;
   }
 }
-
-// Prevent arrow keys & spacebar from scrolling the page
+ 
 window.addEventListener('keydown', function(e) {
   if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', " "].includes(e.key)) {
-      e.preventDefault();
+    e.preventDefault();
   }
 }, false);
-
-const FIRE_RATE = 500; // Fire rate in milliseconds
-let lastFireTime = 0; // Timestamp of the last bullet fired
-
-function shootBullet() {
-  // Check if enough time has passed since the last bullet was fired
+ 
+const FIRE_RATE = 300;
+let lastFireTime = 0;
+ 
+function shootBullet(x, y, speed) {
   const currentTime = Date.now();
   if (currentTime - lastFireTime < FIRE_RATE) {
-    return; // Don't shoot if fire rate limit is not reached
+    return;
   }
-
-  // Update last fire time
   lastFireTime = currentTime;
-
-  // Create a new bullet
-  var newBullet = {
-    x: player.x + player.width / 2 - BULLET_WIDTH / 2,
-    y: player.y,
-    width: BULLET_WIDTH,
-    height: BULLET_HEIGHT,
-    visible: true
-  };
-
-  // Add the new bullet to the bullets array
-  bullets.push(newBullet);
+  bullets.push({ x, y, width: BULLET_WIDTH, height: BULLET_HEIGHT, speed: speed });
 }
-
-// Update game state
+ 
+function enemiesShoot() {
+  enemies.forEach(enemy => {
+    if (Math.random() < 0.01) {
+      enemyBullets.push({
+        x: enemy.x + enemy.width / 2 - BULLET_WIDTH / 2,
+        y: enemy.y + enemy.height,
+        width: BULLET_WIDTH,
+        height: BULLET_HEIGHT,
+        speed: BULLET_SPEED
+      });
+    }
+  });
+}
+ 
 function update() {
-  // Move player
+  if (gameOver) return;  // Stop updating if game is over
+ 
   if (rightPressed && player.x < canvas.width - player.width) {
     player.x += PLAYER_SPEED;
   } else if (leftPressed && player.x > 0) {
     player.x -= PLAYER_SPEED;
   }
-
-  // Move enemy
-  enemy.x += ENEMY_SPEED;
-  if (enemy.x > canvas.width) {
-    enemy.x = 0;
-    enemy.y += 30;
-  }
-
-  // Move bullets
-  for (let i = 0; i < bullets.length; i++) {
-    bullets[i].y -= BULLET_SPEED;
-    // If the bullet is off the screen, remove it from the array
-    if (bullets[i].y < 0) {
-      bullets.splice(i, 1);
-      i--;
-    }
-  }
-
-  // Collision detection
-  for (let i = 0; i < bullets.length; i++) {
-    if (
-      bullets[i].x < enemy.x + enemy.width &&
-      bullets[i].x + bullets[i].width > enemy.x &&
-      bullets[i].y < enemy.y + enemy.height &&
-      bullets[i].y + bullets[i].height > enemy.y
-    ) {
-      score++;
-      document.getElementById("score").innerText = score;
-      bullets.splice(i, 1);
+ 
+  enemies.forEach(enemy => {
+    enemy.x += ENEMY_SPEED;
+    if (enemy.x > canvas.width) {
       enemy.x = 0;
-      enemy.y = 0;
-      break; // Exit loop after first collision
+      enemy.y += 30;
+      if (enemy.y > canvas.height) {
+        enemy.y = 0;
+        enemyCount *= 2;
+        initEnemies();
+      }
     }
-  }
+  });
+ 
+  bullets.forEach((bullet, index) => {
+    bullet.y += bullet.speed;
+    if (bullet.y < 0 || bullet.y > canvas.height) {
+      bullets.splice(index, 1);
+    }
+  });
+ 
+  enemyBullets.forEach((bullet, index) => {
+    bullet.y += bullet.speed;
+    if (bullet.y > canvas.height) {
+      enemyBullets.splice(index, 1);
+    }
+  });
+ 
+  bullets.forEach((bullet, bulletIndex) => {
+    enemies.forEach((enemy, enemyIndex) => {
+      if (
+        bullet.x < enemy.x + enemy.width &&
+        bullet.x + bullet.width > enemy.x &&
+        bullet.y < enemy.y + enemy.height &&
+        bullet.y + bullet.height > enemy.y
+      ) {
+        score++;
+        document.getElementById("score").innerText = score;
+        bullets.splice(bulletIndex, 1);
+        enemies.splice(enemyIndex, 1);
+        if (enemies.length === 0) {
+          enemyCount *= 2;
+          initEnemies();
+        }
+      }
+    });
+  });
+ 
+  enemyBullets.forEach((bullet, index) => {
+    if (
+      bullet.x < player.x + player.width &&
+      bullet.x + bullet.width > player.x &&
+      bullet.y < player.y + player.height &&
+      bullet.y + bullet.height > player.y
+    ) {
+      console.log("Player hit!");
+      gameOver = true;  // Set game over state
+      enemyBullets.splice(index, 1);
+    }
+  });
+ 
+  enemiesShoot();
 }
-
-// Draw objects on canvas
+ 
 function draw() {
+  if (gameOver) return;  // Stop drawing if game is over
+ 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-  // Draw player image
+ 
   var playerImg = new Image();
   playerImg.src = "/static/images/space-invaders-assets/player.png";
   ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
-
-  // Draw enemy image
+ 
   var enemyImg = new Image();
   enemyImg.src = "/static/images/space-invaders-assets/enemy1.png";
-  ctx.drawImage(enemyImg, enemy.x, enemy.y, enemy.width, enemy.height);
-
-  // Draw bullet image
+  enemies.forEach(enemy => {
+    ctx.drawImage(enemyImg, enemy.x, enemy.y, enemy.width, enemy.height);
+  });
+ 
   var bulletImg = new Image();
   bulletImg.src = "/static/images/space-invaders-assets/bullet.png";
-  for (let i = 0; i < bullets.length; i++) {
-    ctx.drawImage(bulletImg, bullets[i].x, bullets[i].y, bullets[i].width, bullets[i].height);
-  }
+  bullets.forEach(bullet => {
+    ctx.drawImage(bulletImg, bullet.x, bullet.y, bullet.width, bullet.height);
+  });
+ 
+  enemyBullets.forEach(bullet => {
+    ctx.drawImage(bulletImg, bullet.x, bullet.y, bullet.width, bullet.height);
+  });
+}
+ 
+function resetGame() {
+  score = 0;
+  document.getElementById("score").innerText = score;
+  enemyCount = 1;
+  gameOver = false;
+  player.x = canvas.width / 2 - PLAYER_WIDTH / 2;
+  player.y = canvas.height - PLAYER_HEIGHT - 10;
+  bullets.length = 0;
+  enemyBullets.length = 0;
+  enemies.length = 0;
+  initEnemies();
 }
 
-// Main game loop
+function showGameOverMessage() {
+  
+  sendScoreToServer(score);
+  // You can replace this with your preferred toast message implementation
+  alert("Game Over! Score: " + score);
+
+  // Reset the game after showing the message
+  resetGame();
+}
+
 function gameLoop() {
   update();
   draw();
-  requestAnimationFrame(gameLoop);
+  if (gameOver) {
+    showGameOverMessage();
+    gameLoop();
+  } else {
+    requestAnimationFrame(gameLoop);
+  }
 }
 
-// Start the game loop
+ 
 gameLoop();
