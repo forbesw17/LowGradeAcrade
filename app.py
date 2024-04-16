@@ -1,5 +1,5 @@
 
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask import render_template
 # import psycopg2
 
@@ -30,6 +30,16 @@ def games():
 def game(game_name):
     # your code here...
     return render_template(f'games/{game_name}.html')
+
+@app.route('/submit_score', methods=['POST'])
+def submit_score():
+    data = request.json
+    score = data.get('score')
+    # Do something with the score, like storing it in the database
+    # Example: You could store the score in your database using SQLAlchemy
+    # For simplicity, let's just print the score here
+    print('Received score:', score)
+    return jsonify({'message': 'Score received successfully'})
 
 @app.route('/auth')
 def auth():
