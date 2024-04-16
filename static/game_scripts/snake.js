@@ -21,12 +21,14 @@ let food = generateFood();
 // }
 
 function sendScoreToServer(score) {
+  let userInput = prompt("Enter your initals:");
+  
   fetch('/submit_score', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ score: score }),
+    body: JSON.stringify({ score: score, title: "snake", username: userInput || "Anonymous"}),
   })
   .then(response => {
     if (!response.ok) {
