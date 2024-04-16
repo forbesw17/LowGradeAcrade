@@ -45,6 +45,9 @@ def submit_score():
 def auth():
        return render_template("auth.html")
 
+@app.route('/login')
+def login():
+    return render_template("login.html") 
 
 
 if __name__ == '__main__':
