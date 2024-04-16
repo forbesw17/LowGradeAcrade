@@ -112,23 +112,34 @@ def about():
 @app.route('/games')
 def games():
        return render_template("games.html")
- 
+
+
+
 @app.route('/games/<game_name>')
 def game(game_name):
     # your code here...
     stmt = select(highscore_table).order_by(highscore_table.c.score.desc()).limit(5)
-    
+   
     high_scores = []
     with engine.connect() as conn:
         for row in conn.execute(stmt):
             high_scores.append(row)  # convert row to dictionary and append to list
-    
+   
     return render_template(f'games/{game_name}.html', high_scores=high_scores)
+ 
 
 @app.route('/submit_score', methods=['POST'])
 def submit_score():
     data = request.json
     score = data.get('score')
+    title = data.get('title')
+    
+    stmt = insert(highscore_table).values(userName = "Han", gameTitle =title,score = score)
+        
+    with engine.connect() as conn:
+       result = conn.execute(stmt)
+       print(result)
+       conn.commit()
     # Do something with the score, like storing it in the database
     # Example: You could store the score in your database using SQLAlchemy
     # For simplicity, let's just print the score here
@@ -166,22 +177,16 @@ def auth():
             print(result)
             conn.commit()
             
-        stmt = insert(highscore_table).values(userName = givenName, gameTitle ="Tetris",score = givenPassword)
-        
-        with engine.connect() as conn:
-            result = conn.execute(stmt)
-            print(result)
-            conn.commit()
+   
 
  
     return render_template("auth.html")
 
 
-@app.route('/login')
-def login():
+    @app.route('/login')
+    def login():
      return render_template("login.html") 
 
 
 if __name__ == '__main__':
-    #db.create_all()
     app.run(debug=True)
