@@ -20,10 +20,20 @@
       Use the arrow keys to move and the space bar to shoot. Don't let the
       aliens reach the bottom!
     </p>
-    {% endblock %} {% block high_scores %}
-    <p>1. Alice: 100 points</p>
-    <p>2. Bob: 80 points</p>
-    <p>3. Charlie: 60 points</p>
+    {% endblock %} 
+    {% block high_scores %}
+    <table>
+      <tr>
+        <th>Username</th>
+        <th>Score</th>
+      </tr>
+      {% for score in high_scores %}
+      <tr>
+        <td>{{ score[0] }}</td>
+        <td>{{ score.score }}</td>
+      </tr>
+      {% endfor %}
+    </table>
     <script src="{{ url_for('static', filename='game_scripts/space-invaders.js') }}"></script>
     {% endblock %}
   </body>

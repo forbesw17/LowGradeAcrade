@@ -21,10 +21,18 @@
       tail!
     </p>
     {% endblock %} {% block high_scores %}
-    <p>1. Alice: 100 points</p>
-    <p>2. Bob: 80 points</p>
-    <p>3. Charlie: 60 points</p>
-    
+    <table>
+      <tr>
+        <th>Username</th>
+        <th>Score</th>
+      </tr>
+      {% for score in high_scores %}
+      <tr>
+        <td>{{ score[0] }}</td>
+        <td>{{ score.score }}</td>
+      </tr>
+      {% endfor %}
+    </table>
     <script src="{{ url_for('static', filename='game_scripts/snake.js') }}"></script>
     {% endblock %}
   </body>

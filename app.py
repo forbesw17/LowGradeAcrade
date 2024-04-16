@@ -118,11 +118,12 @@ def game(game_name):
     # your code here...
     stmt = select(highscore_table).order_by(highscore_table.c.score.desc()).limit(5)
     
+    high_scores = []
     with engine.connect() as conn:
         for row in conn.execute(stmt):
-            print(row) 
+            high_scores.append(row)  # convert row to dictionary and append to list
     
-    return render_template(f'games/{game_name}.html')
+    return render_template(f'games/{game_name}.html', high_scores=high_scores)
 
 @app.route('/submit_score', methods=['POST'])
 def submit_score():
@@ -176,8 +177,8 @@ def auth():
     return render_template("auth.html")
 
 
-    @app.route('/login')
-    def login():
+@app.route('/login')
+def login():
      return render_template("login.html") 
 
 

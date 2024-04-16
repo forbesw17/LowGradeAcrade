@@ -29,6 +29,18 @@
           <h2>Current High Scores</h2>
           {% block high_scores %}
           <!-- Game-specific high scores will go here -->
+          <table>
+            <tr>
+              <th>Username</th>
+              <th>Score</th>
+            </tr>
+            {% for score in high_scores %}
+            <tr>
+              <td>{{ score.username }}</td>
+              <td>{{ score.score }}</td>
+            </tr>
+            {% endfor %}
+          </table>
           {% endblock %}
         </div>
       </div>

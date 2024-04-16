@@ -243,7 +243,7 @@ const player = {
 };
 
 let dropCounter = 0;
-let dropInterval = 1000;
+let dropInterval = 150;
 let lastTime = 0;
 
 document.addEventListener("keydown", (event) => {
