@@ -12,6 +12,8 @@ const BULLET_WIDTH = 5;
 const BULLET_HEIGHT = 10;
 const BULLET_SPEED = 5;
 
+let score = 0;
+
 // Player object
 const player = {
   x: canvas.width / 2 - PLAYER_WIDTH / 2,
@@ -124,6 +126,8 @@ function update() {
       bullets[i].y < enemy.y + enemy.height &&
       bullets[i].y + bullets[i].height > enemy.y
     ) {
+      score++;
+      document.getElementById("score").innerText = score;
       bullets.splice(i, 1);
       enemy.x = 0;
       enemy.y = 0;

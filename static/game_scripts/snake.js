@@ -78,7 +78,7 @@ function moveSnake() {
 
   if (head.x === food.x && head.y === food.y) {
     score++;
-    document.getElementById("score").innerText = "Score: " + score;
+    document.getElementById("score").innerText = score;
     food = generateFood();
   } else {
     snake.pop();
