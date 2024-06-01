@@ -13,38 +13,31 @@ let dx = 0;
 let dy = 0;
 let food = generateFood();
 
-// function generateFood() {
-//   return {
-//     x: Math.floor(Math.random() * tileCount),
-//     y: Math.floor(Math.random() * tileCount),
-//   };
-// }
-
-function sendScoreToServer(score) {
-  let userInput = prompt("Enter your initals:");
+// function sendScoreToServer(score) {
+//   let userInput = prompt("Enter your initals:");
   
-  fetch('/submit_score', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ score: score, title: "snake", username: userInput || "Anonymous"}),
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Score submitted successfully:', data.message);
-    // Optionally, you can handle the response from the server here
-  })
-  .catch(error => {
-    console.error('Error submitting score:', error);
-    // Optionally, you can handle errors here
-  });
-}
+//   fetch('/submit_score', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({ score: score, title: "snake", username: userInput || "Anonymous"}),
+//   })
+//   .then(response => {
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+//     return response.json();
+//   })
+//   .then(data => {
+//     console.log('Score submitted successfully:', data.message);
+//     // Optionally, you can handle the response from the server here
+//   })
+//   .catch(error => {
+//     console.error('Error submitting score:', error);
+//     // Optionally, you can handle errors here
+//   });
+// }
 
 function generateFood() {
   let newFoodPosition;
@@ -123,7 +116,7 @@ function gameLoop() {
   if (checkCollision()) {
     // Game over message
     score = document.getElementById("score").innerText;
-    sendScoreToServer(score);
+    // sendScoreToServer(score);
     alert(`Game Over! ${score}.`);
 
     // Reset game

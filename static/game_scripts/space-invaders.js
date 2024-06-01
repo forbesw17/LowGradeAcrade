@@ -1,31 +1,32 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-function sendScoreToServer(score) {
-  let userInput = prompt("Enter your initals:");
+// function sendScoreToServer(score) {
+//   let userInput = prompt("Enter your initals:");
   
-  fetch('/submit_score', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ score: score, title: "space-invaders", username: userInput || "Anonymous"}),
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Score submitted successfully:', data.message);
-    // Optionally, you can handle the response from the server here
-  })
-  .catch(error => {
-    console.error('Error submitting score:', error);
-    // Optionally, you can handle errors here
-  });
-}
+//   fetch('/submit_score', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({ score: score, title: "space-invaders", username: userInput || "Anonymous"}),
+//   })
+//   .then(response => {
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+//     return response.json();
+//   })
+//   .then(data => {
+//     console.log('Score submitted successfully:', data.message);
+//     // Optionally, you can handle the response from the server here
+//   })
+//   .catch(error => {
+//     console.error('Error submitting score:', error);
+//     // Optionally, you can handle errors here
+//   });
+// }
+
  
 // Game constants
 const PLAYER_WIDTH = 40;
@@ -234,7 +235,7 @@ function resetGame() {
 
 function showGameOverMessage() {
   
-  sendScoreToServer(score);
+  // sendScoreToServer(score);
   // You can replace this with your preferred toast message implementation
   alert("Game Over! Score: " + score);
 
